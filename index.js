@@ -46,8 +46,12 @@ app.get("/api/persons/:id", (req, res) => {
 
 app.delete("/api/persons/:id", (req, res) => {
   const id = Number(req.params.id);
-  const contacts = persons.find((person) => person.id !== id);
-  res.status(204).end();
+  const contacts = persons.map((person) =>
+    person.id !== id
+      ? person
+      : `the item with id ${person.id} has now been deleted`
+  );
+  res.json(contacts);
 });
 
 const PORT = 3001;

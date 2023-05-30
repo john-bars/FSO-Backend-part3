@@ -44,14 +44,14 @@ app.get("/api/persons/:id", (req, res) => {
   person ? res.json(person) : res.status(404).end();
 });
 
-app.delete("/api/persons/:id", (req, res) => {
+/* app.delete("/api/persons/:id", (req, res) => {
   const id = Number(req.params.id);
-  const contacts = persons.map((person) =>
-    person.id !== id
-      ? person
-      : `the item with id ${person.id} has now been deleted`
-  );
+  const contacts = persons.map((person) => person.id !== id && person);
   res.json(contacts);
+}); */
+
+app.delete("/api/persons/:id", (req, res) => {
+  res.status(204).end();
 });
 
 const PORT = 3001;

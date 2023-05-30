@@ -53,6 +53,9 @@ app.get("/api/persons/:id", (req, res) => {
 app.delete("/api/persons/:id", (req, res) => {
   res.status(204).end();
 });
+app.delete("/api/persons/:number", (req, res) => {
+  res.status(204).end();
+});
 
 const generateID = () => {
   let randomNumber = Math.floor(Math.random() * 100 + 1);
@@ -61,12 +64,22 @@ const generateID = () => {
 
 app.post("/api/persons", (req, res) => {
   const body = req.body;
+  console.log(body);
 
-  if (!body.name) {
-    return res.status(400).json({
-      error: "content missing",
+  !body.name &&
+    res.status(400).json({
+      error: "name missing",
     });
-  }
+
+  !body.number &&
+    res.status(400).json({
+      error: "number missing",
+    });
+
+  persons.some((person) => person.name === body.name) &&
+    res.status(409).json({
+      error: `${body.name} already exist.`,
+    });
 
   const person = {
     id: generateID(),

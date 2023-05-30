@@ -32,7 +32,10 @@ app.get("/api/persons", (req, res) => {
 const numberOfContacts = persons.length;
 
 app.get("/info", (req, res) => {
-  res.send(`<p>Phonebook has info for ${numberOfContacts} people</p>`);
+  const date = Date();
+  res.send(
+    `<p>Phonebook has info for ${numberOfContacts} people<br/>${date}</p>`
+  );
 });
 
 const PORT = 3001;

@@ -3,7 +3,12 @@ const morgan = require("morgan");
 const app = express();
 app.use(express.json());
 
-app.use(morgan("combined"));
+morgan.token("body", (req) => {
+  return JSON.stringify(req.body);
+});
+app.use(
+  morgan(":method :url :status :response-time ms - :res[content-length] :body")
+);
 
 let persons = [
   {
@@ -66,7 +71,6 @@ const generateID = () => {
 
 app.post("/api/persons", (req, res) => {
   const body = req.body;
-  console.log(body);
 
   !body.name &&
     res.status(400).json({

@@ -1,6 +1,9 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 app.use(express.json());
+
+app.use(morgan("combined"));
 
 let persons = [
   {
@@ -29,12 +32,11 @@ app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
 
-const numberOfContacts = persons.length;
-
 app.get("/info", (req, res) => {
+  const numberOfContacts = persons.length;
   const date = Date();
   res.send(
-    `<p>Phonebook has info for ${numberOfContacts} people<br/>${date}</p>`
+    `<p>Phonebook has info for ${numberOfContacts} people.<br/>${date}</p>`
   );
 });
 
